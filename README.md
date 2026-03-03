@@ -6,7 +6,7 @@ Status:
 
 - [x] SEGNN + N-Body
 - [x] SEGNN + QM9
-- [ ] SchNet + QM9
+- [x] SchNet + QM9
 - [ ] EGNO + MoCap
 - [ ] VN-DGCNN + ModelNet40
 
