@@ -136,9 +136,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print(args)
 
-    if args.dataset == 'qm9':
-        raise NotImplementedError("QM9 is not currently verified; please use n-body and check for updates later.")
-
     # Initialize our global epoch counter
     global_epoch = args.start_epoch
 

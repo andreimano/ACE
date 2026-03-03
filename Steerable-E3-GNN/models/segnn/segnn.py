@@ -27,13 +27,6 @@ class SEGNN(nn.Module):
     ):
         super().__init__()
         self.task = task
-        # Create network, embedding first
-        # self.embedding_layer_1 = O3TensorProductSwishGate(
-        #     input_irreps, hidden_irreps, node_attr_irreps
-        # )
-        # self.embedding_layer_2 = O3TensorProduct(
-        #     hidden_irreps, hidden_irreps, node_attr_irreps
-        # )
 
         self.embedding_layer = O3TensorProduct(
             input_irreps, hidden_irreps, node_attr_irreps
@@ -119,9 +112,6 @@ class SEGNN(nn.Module):
 
         self.catch_isolated_nodes(graph)
 
-        # Embed
-        # x = self.embedding_layer_1(x, node_attr)
-        # x = self.embedding_layer_2(x, node_attr)
         x = self.embedding_layer(x, node_attr)
 
         # Pass messages

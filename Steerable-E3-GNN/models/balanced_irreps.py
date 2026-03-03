@@ -1,5 +1,5 @@
 from e3nn.o3 import Irreps
-from e3nn.o3 import Linear, spherical_harmonics, FullyConnectedTensorProduct
+from e3nn.o3 import FullyConnectedTensorProduct
 
 
 def BalancedIrreps(lmax, vec_dim, sh_type=True):
@@ -73,7 +73,7 @@ def WeightBalancedIrreps(irreps_in1_scalar, irreps_in2, sh=True, lmax=None):
     """
 
     n = 1
-    if lmax == None:
+    if lmax is None:
         lmax = irreps_in2.lmax
     irreps_in1 = (Irreps.spherical_harmonics(lmax) * n).sort().irreps.simplify() if sh else BalancedIrreps(lmax, n)
     weight_numel1 = FullyConnectedTensorProduct(irreps_in1, irreps_in2, irreps_in1).weight_numel

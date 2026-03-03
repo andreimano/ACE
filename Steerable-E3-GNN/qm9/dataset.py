@@ -1,6 +1,5 @@
-from typing import Optional, Callable, List
+from typing import Optional, List
 
-import sys
 import os
 import os.path as osp
 from tqdm import tqdm
@@ -51,7 +50,7 @@ targets = ['mu', 'alpha', 'homo', 'lumo', 'gap', 'r2', 'zpve', 'U0',
 thermo_targets = ['U', 'U0', 'H', 'G']
 
 
-class TargetGetter(object):
+class TargetGetter:
     """ Gets relevant target """
 
     def __init__(self, target):
@@ -93,7 +92,7 @@ class QM9(InMemoryDataset):
 
         super().__init__(self.root, transform)
 
-        self.data, self.slices = torch.load(self.processed_paths[0])
+        self.data, self.slices = torch.load(self.processed_paths[0], weights_only=False)
 
     def calc_stats(self):
         ys = np.array([data.y.item() for data in self])
@@ -108,7 +107,7 @@ class QM9(InMemoryDataset):
             return out.view(-1, 1)
         return None
 
-    @ property
+    @property
     def raw_file_names(self) -> List[str]:
         try:
             import rdkit  # noqa
@@ -117,13 +116,12 @@ class QM9(InMemoryDataset):
             print("Please install rdkit")
             return
 
-    @ property
+    @property
     def processed_file_names(self) -> str:
         return ["_".join([self.partition, "r="+str(np.round(self.radius, 2)),
                           self.feature_type, "l="+str(self.lmax_attr)]) + '.pt']
 
     def download(self):
-        print("i'm downloading", self.raw_dir, self.raw_url)
         try:
             import rdkit  # noqa
             file_path = download_url(self.raw_url, self.raw_dir)
@@ -143,7 +141,6 @@ class QM9(InMemoryDataset):
             import rdkit
             from rdkit import Chem
             from rdkit.Chem.rdchem import HybridizationType
-            from rdkit.Chem.rdchem import BondType as BT
             from rdkit import RDLogger
             RDLogger.DisableLog('rdApp.*')
         except ImportError:
@@ -204,7 +201,6 @@ class QM9(InMemoryDataset):
             sp = []
             sp2 = []
             sp3 = []
-            num_hs = []
             for atom in mol.GetAtoms():
                 type_idx.append(types[atom.GetSymbol()])
                 atomic_number.append(atom.GetAtomicNum())
@@ -259,25 +255,3 @@ def get_cormorant_features(one_hot, charges, charge_power, charge_scale):
     charge_tensor = charge_tensor.view(charges.shape + (1, charge_power + 1))
     atom_scalars = (one_hot.unsqueeze(-1) * charge_tensor).view(charges.shape[:2] + (-1,))
     return atom_scalars
-
-
-if __name__ == "__main__":
-    dataset = QM9("datasets", "alpha", 2.0, "train", feature_type="one_hot")
-    print("length", len(dataset))
-    ys = np.array([data.y.item() for data in dataset])
-    mean, mad = dataset.calc_stats()
-
-    for item in dataset:
-        print(item.edge_index)
-        break
-
-    print("mean", mean, "mad", mad)
-    import matplotlib.pyplot as plt
-
-    plt.subplot(121)
-    plt.title(dataset.target)
-    plt.hist(ys)
-    plt.subplot(122)
-    plt.title(dataset.target + " standardised")
-    plt.hist((ys - mean)/mad)
-    plt.show()

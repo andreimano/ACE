@@ -5,7 +5,7 @@ Code cleanup in progress, all code and instructions for reproducing experiments 
 Status:
 
 - [x] SEGNN + N-Body
-- [ ] SEGNN + QM9
+- [x] SEGNN + QM9
 - [ ] SchNet + QM9
 - [ ] EGNO + MoCap
 - [ ] VN-DGCNN + ModelNet40
