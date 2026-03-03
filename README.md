@@ -1,5 +1,7 @@
 Code for our NeurIPS 2025 Oral paper [Learning (Approximately) Equivariant Networks via Constrained Optimization](https://arxiv.org/pdf/2505.13631).
 
+[![arXiv](https://img.shields.io/static/v1?&logo=arxiv&label=Paper&message=arXiv:2505.13631&color=B31B1B)](https://arxiv.org/abs/2505.13631)
+
 Code cleanup in progress, all code and instructions for reproducing experiments will be make publicly available soon.
 
 Status:
@@ -7,7 +9,7 @@ Status:
 - [x] SEGNN + N-Body
 - [x] SEGNN + QM9
 - [x] SchNet + QM9
-- [ ] EGNO + MoCap
+- [x] EGNO + MoCap
 - [ ] VN-DGCNN + ModelNet40
 
 Please also refer to Appendix A.1. for an example implementation of ACE.
