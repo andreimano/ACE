@@ -10,7 +10,7 @@ Status:
 - [x] SEGNN + QM9
 - [x] SchNet + QM9
 - [x] EGNO + MoCap
-- [ ] VN-DGCNN + ModelNet40
+- [x] VN-DGCNN + ModelNet40
 
 Please also refer to Appendix A.1. for an example implementation of ACE.
 
