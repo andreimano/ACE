@@ -1,0 +1,28 @@
+# sweep_dual_lr.yaml
+program: train_cls.py 
+method: grid
+entity: mls-2
+metric:
+  name: best_instance_accuracy_non_equivariant
+  goal: maximize
+parameters:
+  dual_lr:
+    values: [0.00001, 0.00005, 0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.1]
+  lr:
+    value: 0.001 
+  batch_size:
+    value: 32
+  epoch:
+    value: 500
+  use_wandb:
+    value: 1
+  use_constrained:
+    value: 1
+  disable_equivariance:
+    value: 1
+  optimizer:
+    value: 'SGD'
+command:
+  - ${env}
+  - ${interpreter}
+  - ${program}
